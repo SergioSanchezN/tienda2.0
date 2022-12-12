@@ -23,9 +23,9 @@ public class Tienda_inv {
         Cliente cliente2 = new Cliente("2","Sam");
         Cliente cliente3 = new Cliente("3","Dana");
         //Productos
-        Producto producto1 = new Producto("Piña",4000,30);
-        Producto producto2 = new Producto("Manzana",1500,12);
-        Producto producto3 = new Producto("Tomate",500,20);
+        Producto producto1 = new Producto(1,"Piña",4000,30);
+        Producto producto2 = new Producto(2,"Manzana",1500,12);
+        Producto producto3 = new Producto(3,"Tomate",500,20);
 
         //Base de datos
         //this.conexion = new Conexion();

@@ -31,4 +31,8 @@ public class Venta {
     public int get_subtotal(){       
         return subtotal;
     }
+    
+    public void sacar_producto(){
+        producto.vender_producto(cantidad);
+    }
 }

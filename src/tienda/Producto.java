@@ -9,19 +9,25 @@ package tienda;
  * @author USUARIO
  */
 public class Producto {
+        private int id;
     	private String nombre;
 	private int precio;
 	private int cantidad;
 
 	//Constructor
-	public Producto(String nombre, int precio, int cantidad)
+	public Producto(int id,String nombre, int precio, int cantidad)
 	{
+            this.id = id;
             this.nombre = nombre;
             this.precio = precio;
             this.cantidad = cantidad;
 	}
 
 	//GETs
+        public int get_id(){
+            return id;
+	}
+        
 	public String get_nombre(){
             return nombre;
 	}

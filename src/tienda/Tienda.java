@@ -21,33 +21,9 @@ public class Tienda {
     Double prdPrc  = Double.parseDouble(JOptionPane.showInputDialog("Indique el Precio"));
     
     
-    private static final String driver="com.mysql.jdbc.Driver";
-    private static final String bbdd="jdbc:mysql://127.0.0.1/apptienda";
-    private static final String usuario ="root";
-    private static final String clave="1234";
-    
     public static void main( String args[] ) {
-       //Connection con = new Conexion();
-       /*
-       Connection conex = null;
-        
-        try {
-            //Registrar el driver
-            Class.forName("com.mysql.jdbc.Driver");
-            //Creamos una conexión a la Base de Datos
-            conex = DriverManager.getConnection(bbdd, usuario, clave);
-            System.out.println("se ha conectado");
-        // Si hay errores informamos al usuario. 
-        } catch (ClassNotFoundException e) {
-            System.out.println("Clase no encontrada: "+e);
-        } catch (SQLException e) {
-            System.out.println("Error de conexion: "+e);
-        } catch (Exception e) {
-            System.out.println("Error desconocido: "+e);
-        }
-        */
        
-       Conexion conexion = Conexion.getSingletonInstance();
+        Conexion conexion = Conexion.getSingletonInstance();
     
         
         //Clientes
@@ -58,9 +34,12 @@ public class Tienda {
         
         //Productos
         List<Producto> productos =  new ArrayList<>();
-        productos.add(new Producto("Piña",4000,30));
-        productos.add(new Producto("Manzana",1500,12));
-        productos.add(new Producto("Tomate",500,20));
+        productos.add(new Producto(1,"Piña",4000,30));
+        productos.add(new Producto(2,"Manzana",1500,12));
+        productos.add(new Producto(3,"Tomate",500,20));
+        
+        //Factura fact = new Factura(clientes.get(1),"11/12/2022");
+        //Conexion.facturar(fact);
         
         //Elegir cliente
         JOptionPane.showMessageDialog(null, "Simulación de un inventario tienda");
@@ -84,7 +63,7 @@ public class Tienda {
                 facturar = Integer.parseInt(JOptionPane.showInputDialog(
                         "Elija una opcion: \n0.Agregar mas productos\n 1.Facturar productos"));
                 if(facturar == 1){
-                    
+                    Conexion.facturar(factura);
                 }
                                
             }
