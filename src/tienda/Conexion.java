@@ -6,6 +6,8 @@ package tienda;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -51,6 +53,62 @@ public class Conexion{
         return conex;
     } 
     
+    public ArrayList<Cliente> obtenerClientes(){ 
+        
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        PreparedStatement ps;
+        String consulta;
+        try{    
+            
+            String SQL = "SELECT * FROM clientes;";
+            PreparedStatement pstmt = conex.prepareStatement(SQL);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while ( rs.next() ) {
+                String id =  rs.getString( 1 );
+                String nombre = rs.getString( 2 );
+                Cliente clien = new Cliente(id, nombre);
+                System.out.println(id);
+                System.out.println(nombre);
+                clientes.add(clien);               
+            }
+                          
+            //JOptionPane.showMessageDialog(null, "Se han insertado los datos");         
+        }catch (SQLException sqle) {
+            System.out.println("Error en la ejecución:" 
+            + sqle.getErrorCode() + " " + sqle.getMessage());
+        }
+      return clientes;
+   }
+    
+    public ArrayList<Producto> obtenerPoductos(){ 
+        
+        ArrayList<Producto> productos = new ArrayList<>();
+        PreparedStatement ps;
+        String consulta;
+        try{    
+            
+            String SQL = "SELECT * FROM productos;";
+            PreparedStatement pstmt = conex.prepareStatement(SQL);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while ( rs.next() ) {
+                int id =  Integer.parseInt(rs.getString( 1 ));
+                String nombre = rs.getString( 2 );
+                Producto prod = new Producto(id, nombre);
+                System.out.println(id);
+                System.out.println(nombre);
+                productos.add(prod);               
+            }
+                          
+            //JOptionPane.showMessageDialog(null, "Se han insertado los datos");         
+        }catch (SQLException sqle) {
+            System.out.println("Error en la ejecución:" 
+            + sqle.getErrorCode() + " " + sqle.getMessage());
+        }
+      return productos;
+   }
+    
     public static void facturar(Factura factura){
       PreparedStatement ps;
       String consulta;
@@ -68,7 +126,7 @@ public class Conexion{
           for(Venta ven : factura.get_ventas()){
             consulta = "INSERT INTO ventas (id_producto, cantidad, subtotal, factura_id) VALUES (?,?,?,?);";
             ps = conex.prepareStatement(consulta);
-            ps.setInt(1, ven.get_producto().get_id());
+            ps.setInt(1, ven.get_producto().getId());
             ps.setInt(2, ven.get_cantidad());
             ps.setInt(3, ven.get_subtotal());
             while ( rs.next() ) {
@@ -76,7 +134,44 @@ public class Conexion{
              ps.setInt(4, Integer.parseInt(ids));
             }   
             ps.executeUpdate();
-            ven.sacar_producto();
+            //ven.sacar_producto();
+          }
+                   
+          JOptionPane.showMessageDialog(null, "Se ha guardado la venta");
+                    
+      }catch (SQLException sqle) {
+        System.out.println("Error en la ejecución:" 
+        + sqle.getErrorCode() + " " + sqle.getMessage());
+      }
+     
+   }
+    
+    public static void ingresarProducto(Factura factura){
+      PreparedStatement ps;
+      String consulta;
+      try{
+          consulta = "INSERT INTO factura ( fecha, id_cliente) values(?,?)";
+          ps = conex.prepareStatement(consulta); 
+          ps.setString(1, factura.get_fecha());
+          ps.setString(2, factura.get_cliente().get_id());
+          ps.executeUpdate();
+          
+          String SQL = "SELECT max(id) FROM factura;";
+          PreparedStatement pstmt = conex.prepareStatement(SQL);
+          ResultSet rs = pstmt.executeQuery();
+        
+          for(Venta ven : factura.get_ventas()){
+            consulta = "INSERT INTO ventas (id_producto, cantidad, subtotal, factura_id) VALUES (?,?,?,?);";
+            ps = conex.prepareStatement(consulta);
+            ps.setInt(1, ven.get_producto().getId());
+            ps.setInt(2, ven.get_cantidad());
+            ps.setInt(3, ven.get_subtotal());
+            while ( rs.next() ) {
+             String ids = rs.getString( 1 );
+             ps.setInt(4, Integer.parseInt(ids));
+            }   
+            ps.executeUpdate();
+            //ven.sacar_producto();
           }
           
           

@@ -18,21 +18,17 @@ public class Venta {
     public Venta(Producto producto, int cantidad){
         this.producto = producto;
         this.cantidad = cantidad;
-        this.subtotal = producto.get_precio()*cantidad;
+        this.subtotal = producto.getPrecioVenta()*cantidad;
     }
 
     //GETs
     public Producto get_producto(){
-            return producto;
+        return producto;
     }
     public int get_cantidad(){
-            return cantidad;
+        return cantidad;
     }
     public int get_subtotal(){       
         return subtotal;
-    }
-    
-    public void sacar_producto(){
-        producto.vender_producto(cantidad);
     }
 }

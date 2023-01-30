@@ -22,10 +22,18 @@ public class Tienda {
     
     
     public static void main( String args[] ) {
-       
-        Conexion conexion = Conexion.getSingletonInstance();
-    
         
+        Tienda_inv store = new Tienda_inv();
+       
+        Home home = new Home(store);
+        home.setVisible(true);
+        
+        
+        
+        
+        
+        /*//Conexion conexion = Conexion.getSingletonInstance();
+           
         //Clientes
         List<Cliente> clientes =  new ArrayList<>();
         clientes.add(new Cliente("1","Jorge"));
@@ -34,15 +42,15 @@ public class Tienda {
         
         //Productos
         List<Producto> productos =  new ArrayList<>();
-        productos.add(new Producto(1,"Piña",4000,30));
-        productos.add(new Producto(2,"Manzana",1500,12));
-        productos.add(new Producto(3,"Tomate",500,20));
+        productos.add(new Producto(1,"Piña"));
+        productos.add(new Producto(2,"Manzana"));
+        productos.add(new Producto(3,"Tomate"));
         
         //Factura fact = new Factura(clientes.get(1),"11/12/2022");
         //Conexion.facturar(fact);
         
         //Elegir cliente
-        JOptionPane.showMessageDialog(null, "Simulación de un inventario tienda");
+        //JOptionPane.showMessageDialog(null, "Simulación de un inventario tienda");
         int salir = 0;
         while(salir == 0){
             int cliente_nombre  = Integer.parseInt(JOptionPane.showInputDialog(
@@ -69,7 +77,7 @@ public class Tienda {
             }
             salir = Integer.parseInt(JOptionPane.showInputDialog(
                         "Elija una opcion:\n 0.Continuar facturando\n 1.Salir de la aplicacion"));
-        }
+        }*/
     
         
         //Tienda tienda = new Tienda();
