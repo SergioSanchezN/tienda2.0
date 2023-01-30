@@ -3,43 +3,62 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package tienda;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author USUARIO
  */
 public class Producto {
-        private int id;
-    	private String nombre;
-	private int precio;
-	private int cantidad;
+    private int id;
+    private String nombre;
+    private List<Compra> compras = new ArrayList<>();
 
-	//Constructor
-	public Producto(int id,String nombre, int precio, int cantidad)
-	{
-            this.id = id;
-            this.nombre = nombre;
-            this.precio = precio;
-            this.cantidad = cantidad;
-	}
+    private int precioVenta = 0;
 
-	//GETs
-        public int get_id(){
-            return id;
-	}
+    //Constructor
+    public Producto(int id,String nombre){
+        this.id = id;
+        this.nombre = nombre;
+    }
+
+    //GETs
+    public int getId(){
+        return id;
+    }
+
+    public String getNombre(){
+        return nombre;
+    }
+    public int getPrecioVenta(){
+        return precioVenta;
+    }
+
+    //Añadir compra
+    public void añadirCompra(Compra compra){
+        compras.add(compra);
+        double suma = 0;
+        for(Compra compraIter : compras){
+            suma = suma + compraIter.getPrecio();
+        }
+        int precio = 0;
+        if(!compras.isEmpty()){
+            suma = suma / compras.size() * 1.1;
+        }        
+        precio = (int) suma;         
+        this.precioVenta = precio;
+    }
+    
+    //Vender producto
+    public int venderProducto(int cant){
         
-	public String get_nombre(){
-            return nombre;
-	}
-	public int get_precio(){
-		return precio;
-	}
-	public int get_cantidad(){
-		return cantidad;
-	}
-
-	//Funcion para disminuir en inventario
-	public void vender_producto(int unidades){
-		cantidad = cantidad - unidades;
-	}
+        for(Compra compraIter : compras){
+            cant = compraIter.venderProducto(cant);
+            if(cant == 0){
+                break;
+            }
+        }       
+        return cant;              
+    }              
 }

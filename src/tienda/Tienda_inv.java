@@ -12,55 +12,25 @@ import java.util.List;
 public class Tienda_inv {
 
     //Atributos
-    private Conexion conexion;
+    Conexion conexion = Conexion.getSingletonInstance();
     private List<Cliente> clientes =  new ArrayList<>();
     private List<Producto> productos =  new ArrayList<>();
 
+
     //Constructor
-    public Tienda_inv(){
-        //Clientes
-        Cliente cliente1 = new Cliente("1","Jorge");
-        Cliente cliente2 = new Cliente("2","Sam");
-        Cliente cliente3 = new Cliente("3","Dana");
-        //Productos
-        Producto producto1 = new Producto(1,"Piña",4000,30);
-        Producto producto2 = new Producto(2,"Manzana",1500,12);
-        Producto producto3 = new Producto(3,"Tomate",500,20);
-
-        //Base de datos
-        //this.conexion = new Conexion();
-
-        //Atributos iniciales
-        this.clientes.add(cliente1);
-        this.clientes.add(cliente2);
-        this.clientes.add(cliente3);  
-        this.productos.add(producto1);
-        this.productos.add(producto2);
-        this.productos.add(producto3);
-    }
-    
-    public List<Cliente> get_clientes(){
-        return clientes;
-    }
-    
-    public List<Producto> get_productos(){
-        return productos;
-    }
-    
-    //Metodo de compra
-    public void crear_factura(String Cliente){
+    public Tienda_inv(){      
+        clientes = this.conexion.obtenerClientes();
+        productos = this.conexion.obtenerPoductos();
+        
         
     }
     
-    //Metodo de recibir pedido
-    public void recibir_pedido(){
+    public List<Cliente> getClientes(){
+        return clientes;
+    }
     
+    public List<Producto> getProductosInventario(){
+        return productos;
     }
-
-    public void confirmar_venta(Factura factura){
-    }
-
-            
-
-
+    
 }

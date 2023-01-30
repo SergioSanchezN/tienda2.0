@@ -40,8 +40,8 @@ public class Factura {
     }
     
     //Añadir total
-    public int calcular_total(){
-        int suma = 0;
+    public double calcular_total(){
+        double suma = 0;
         for(Venta ven : ventas){
             suma = suma + ven.get_subtotal();
         }      
