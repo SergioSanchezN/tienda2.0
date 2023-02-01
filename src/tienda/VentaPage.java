@@ -8,19 +8,19 @@ package tienda;
  *
  * @author USUARIO
  */
-public class SalePage extends javax.swing.JFrame {
-    static Tienda_inv store;
+public class VentaPage extends javax.swing.JFrame {
+    static Tienda store;
     
     /**
      * Creates new form SalePage
      */
-    public SalePage(Tienda_inv store) {
+    public VentaPage(Tienda store) {
         this.store = store;
         initComponents();
         for(Cliente cliente : store.getClientes()){
             jComboBox1.addItem(cliente.get_nombre());
         }
-        for(Producto producto : store.getProductosInventario()){
+        for(InventarioProducto producto : store.getProductos()){
             jComboBox2.addItem(producto.getNombre());
         }
     }
@@ -95,6 +95,11 @@ public class SalePage extends javax.swing.JFrame {
         jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jButton1.setText("Facturar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("←");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -207,7 +212,7 @@ public class SalePage extends javax.swing.JFrame {
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         int index = jComboBox2.getSelectedIndex();
-        Producto producto = store.getProductosInventario().get(index);       
+        InventarioProducto producto = store.getProductos().get(index);       
         jLabel5.setText(String.valueOf(producto.getPrecioVenta()));
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
@@ -217,11 +222,18 @@ public class SalePage extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Home home = new Home(store);
+        Menu home = new Menu(store);
         System.out.println(store.getClientes());
         home.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Cliente cliente = store.getClientes().get(jComboBox1.getSelectedIndex());
+        InventarioProducto producto = store.getProductos().get(jComboBox2.getSelectedIndex());
+        int cantidad = Integer.parseInt(jTextField1.getText());
+        store.registrarVenta(cliente, producto, cantidad);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,20 +252,21 @@ public class SalePage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SalePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentaPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SalePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentaPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SalePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentaPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SalePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentaPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SalePage(store).setVisible(true);
+                new VentaPage(store).setVisible(true);
             }
         });
     }

@@ -10,25 +10,31 @@ package tienda;
  */
 public class Venta {
     //Atributos
-    private Producto producto;
+    private int id;
+    private Cliente cliente;
+    private InventarioProducto producto;
     private int cantidad;
-    private int subtotal;
+    private int total;
     
     //Constructor
-    public Venta(Producto producto, int cantidad){
+    public Venta(Cliente cliente, InventarioProducto producto, int cantidad){
+        this.cliente = cliente;
         this.producto = producto;
         this.cantidad = cantidad;
-        this.subtotal = producto.getPrecioVenta()*cantidad;
+        this.total = producto.getPrecioVenta()*cantidad;
     }
 
     //GETs
-    public Producto get_producto(){
+    public Cliente getCliente(){
+        return cliente;
+    }
+    public InventarioProducto getProducto(){
         return producto;
     }
-    public int get_cantidad(){
+    public int getCantidad(){
         return cantidad;
     }
-    public int get_subtotal(){       
-        return subtotal;
+    public int getTotal(){       
+        return total;
     }
 }

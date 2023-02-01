@@ -11,6 +11,8 @@ import java.util.List;
  * @author USUARIO
  */
 public class Compra {
+    private int id;
+    private String fecha;
     private int precio;
     private int cantidadComprada;
     private int cantidadReal;
@@ -30,6 +32,10 @@ public class Compra {
     }
     public int getCantidadReal(){
         return cantidadReal;
+    }
+    
+    public void setId(int id){
+        this.id = id;
     }
     
     //Vender producto

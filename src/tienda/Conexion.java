@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package tienda;
+import demo.Factura;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import java.sql.PreparedStatement;
@@ -65,7 +66,7 @@ public class Conexion{
             ResultSet rs = pstmt.executeQuery();
             
             while ( rs.next() ) {
-                String id =  rs.getString( 1 );
+                int id =  Integer.parseInt(rs.getString( 1 ));
                 String nombre = rs.getString( 2 );
                 Cliente clien = new Cliente(id, nombre);
                 System.out.println(id);
@@ -79,11 +80,11 @@ public class Conexion{
             + sqle.getErrorCode() + " " + sqle.getMessage());
         }
       return clientes;
-   }
+    }
     
-    public ArrayList<Producto> obtenerPoductos(){ 
+    public ArrayList<InventarioProducto> obtenerPoductos(){ 
         
-        ArrayList<Producto> productos = new ArrayList<>();
+        ArrayList<InventarioProducto> productos = new ArrayList<>();
         PreparedStatement ps;
         String consulta;
         try{    
@@ -95,7 +96,7 @@ public class Conexion{
             while ( rs.next() ) {
                 int id =  Integer.parseInt(rs.getString( 1 ));
                 String nombre = rs.getString( 2 );
-                Producto prod = new Producto(id, nombre);
+                InventarioProducto prod = new InventarioProducto(id, nombre);
                 System.out.println(id);
                 System.out.println(nombre);
                 productos.add(prod);               
@@ -107,46 +108,56 @@ public class Conexion{
             + sqle.getErrorCode() + " " + sqle.getMessage());
         }
       return productos;
-   }
-    
-    public static void facturar(Factura factura){
+    }
+
+    public static void ingresarVenta(Venta venta){
       PreparedStatement ps;
       String consulta;
       try{
-          consulta = "INSERT INTO factura ( fecha, id_cliente) values(?,?)";
-          ps = conex.prepareStatement(consulta); 
-          ps.setString(1, factura.get_fecha());
-          ps.setString(2, factura.get_cliente().get_id());
-          ps.executeUpdate();
-          
-          String SQL = "SELECT max(id) FROM factura;";
-          PreparedStatement pstmt = conex.prepareStatement(SQL);
-          ResultSet rs = pstmt.executeQuery();
-        
-          for(Venta ven : factura.get_ventas()){
-            consulta = "INSERT INTO ventas (id_producto, cantidad, subtotal, factura_id) VALUES (?,?,?,?);";
+          consulta = "INSERT INTO ventas (cantidad, total, id_producto, id_cliente) VALUES (?,?,?,?);";
             ps = conex.prepareStatement(consulta);
-            ps.setInt(1, ven.get_producto().getId());
-            ps.setInt(2, ven.get_cantidad());
-            ps.setInt(3, ven.get_subtotal());
-            while ( rs.next() ) {
-             String ids = rs.getString( 1 );
-             ps.setInt(4, Integer.parseInt(ids));
-            }   
+            ps.setInt(1, venta.getCantidad());
+            ps.setInt(2, venta.getTotal());
+            ps.setInt(3, venta.getProducto().getId());
+            ps.setInt(4, venta.getCliente().get_id());
             ps.executeUpdate();
-            //ven.sacar_producto();
-          }
-                   
-          JOptionPane.showMessageDialog(null, "Se ha guardado la venta");
-                    
+
+          JOptionPane.showMessageDialog(null, "Se han insertado los datos");
+          
       }catch (SQLException sqle) {
-        System.out.println("Error en la ejecución:" 
+        JOptionPane.showMessageDialog(null,"Error en la ejecución:" 
         + sqle.getErrorCode() + " " + sqle.getMessage());
-      }
-     
-   }
+      }    
+    }
     
-    public static void ingresarProducto(Factura factura){
+    public static void ingresarCompra(InventarioProducto producto, Compra compra){
+      PreparedStatement ps;
+      String consulta;
+      try{
+          consulta = "INSERT INTO compras (precio, cantidadCompra, cantidadInventario, id_producto) VALUES (?,?,?);";
+            ps = conex.prepareStatement(consulta);
+            ps.setInt(1, compra.getPrecio());
+            ps.setInt(2, compra.getCantidadComprada());
+            ps.setInt(3, compra.getCantidadReal());
+            ps.setInt(4, producto.getId());
+            ps.executeUpdate();
+
+          JOptionPane.showMessageDialog(null, "Se ha guardado la compra");
+          
+      }catch (SQLException sqle) {
+        JOptionPane.showMessageDialog(null,"Error al guardar la compra:" 
+        + sqle.getErrorCode() + " " + sqle.getMessage());
+      }    
+    }
+    
+    
+    
+}
+
+
+
+
+/*public static void demoIngresarProducto(Factura factura){
       PreparedStatement ps;
       String consulta;
       try{
@@ -165,7 +176,7 @@ public class Conexion{
             ps = conex.prepareStatement(consulta);
             ps.setInt(1, ven.get_producto().getId());
             ps.setInt(2, ven.get_cantidad());
-            ps.setInt(3, ven.get_subtotal());
+            ps.setInt(3, ven.get_total());
             while ( rs.next() ) {
              String ids = rs.getString( 1 );
              ps.setInt(4, Integer.parseInt(ids));
@@ -184,7 +195,4 @@ public class Conexion{
         + sqle.getErrorCode() + " " + sqle.getMessage());
       }
      
-   }
-    
-    
-}
+   }*/

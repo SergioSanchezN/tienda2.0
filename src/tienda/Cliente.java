@@ -10,11 +10,11 @@ package tienda;
  */
 public class Cliente {
     //Atributos
-    final private String id;
+    final private int id;
     final private String nombre;
 
     //Constructor
-    public Cliente(String id, String nomb){
+    public Cliente(int id, String nomb){
         this.id = id;
         this.nombre = nomb;
     }
@@ -24,7 +24,7 @@ public class Cliente {
             return nombre;
     }
     
-    public String get_id(){
+    public int get_id(){
             return id;
     }
 }

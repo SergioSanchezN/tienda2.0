@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package tienda;
+package demo;
 import java.util.ArrayList;
 import java.util.List;
+import tienda.Cliente;
+import tienda.Venta;
 
 /**
  *
@@ -43,7 +45,7 @@ public class Factura {
     public double calcular_total(){
         double suma = 0;
         for(Venta ven : ventas){
-            suma = suma + ven.get_subtotal();
+            suma = suma + ven.getTotal();
         }      
         return suma;
     }

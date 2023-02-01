@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author USUARIO
  */
-public class Producto {
+public class InventarioProducto {
     private int id;
     private String nombre;
     private List<Compra> compras = new ArrayList<>();
@@ -18,7 +18,7 @@ public class Producto {
     private int precioVenta = 0;
 
     //Constructor
-    public Producto(int id,String nombre){
+    public InventarioProducto(int id,String nombre){
         this.id = id;
         this.nombre = nombre;
     }

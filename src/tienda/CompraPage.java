@@ -10,19 +10,19 @@ import java.util.List;
  *
  * @author USUARIO
  */
-public class BuyPage extends javax.swing.JFrame {
+public class CompraPage extends javax.swing.JFrame {
 
-    static Tienda_inv store;
+    static Tienda store;
         
     
     /**
      * Creates new form BuyPage
      */
-    public BuyPage(Tienda_inv store) {
+    public CompraPage(Tienda store) {
         this.store = store;
         initComponents();
         
-        for(Producto producto : store.getProductosInventario()){
+        for(InventarioProducto producto : store.getProductos()){
             jComboBox1.addItem(producto.getNombre());
         }
     }
@@ -173,7 +173,7 @@ public class BuyPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Producto produc = store.getProductosInventario().get(jComboBox1.getSelectedIndex());
+        InventarioProducto produc = store.getProductos().get(jComboBox1.getSelectedIndex());
         System.out.println(produc.getNombre());
         
         int precio = Integer.parseInt(jTextField1.getText());
@@ -185,7 +185,7 @@ public class BuyPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Home home = new Home(store);
+        Menu home = new Menu(store);
         home.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -219,20 +219,21 @@ public class BuyPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuyPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CompraPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuyPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CompraPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuyPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CompraPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuyPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CompraPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BuyPage(store).setVisible(true);
+                new CompraPage(store).setVisible(true);
             }
         });
     }
