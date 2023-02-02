@@ -24,6 +24,9 @@ public class Compra {
     }
     
     //GET
+    public int getId(){
+        return id;
+    }
     public int getPrecio(){
         return precio;
     }   
@@ -34,18 +37,23 @@ public class Compra {
         return cantidadReal;
     }
     
+    //SET
     public void setId(int id){
         this.id = id;
     }
+    public void setCantidadReal(int cantidadReal){
+        this.cantidadReal = cantidadReal;
+    }
+    
     
     //Vender producto
     public int venderProducto(int cant){
         if(cantidadReal>=cant){
             cantidadReal = cantidadReal - cant;
-            return 0;
+            return cantidadReal;
         }else{
             cantidadReal = 0;
-            return -1*(cantidadReal - cant);
+            return cantidadReal;
         }
     }
 }

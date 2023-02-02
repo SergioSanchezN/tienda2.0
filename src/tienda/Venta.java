@@ -21,7 +21,7 @@ public class Venta {
         this.cliente = cliente;
         this.producto = producto;
         this.cantidad = cantidad;
-        this.total = producto.getPrecioVenta()*cantidad;
+        this.total = producto.calcularPrecio()*cantidad;
     }
 
     //GETs

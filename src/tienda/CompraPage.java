@@ -173,15 +173,12 @@ public class CompraPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        InventarioProducto produc = store.getProductos().get(jComboBox1.getSelectedIndex());
-        System.out.println(produc.getNombre());
-        
+        InventarioProducto produc = store.getProductos().get(jComboBox1.getSelectedIndex());       
         int precio = Integer.parseInt(jTextField1.getText());
         int cant = Integer.parseInt(jTextField2.getText());       
         Compra comp = new Compra(precio, cant);
-        produc.añadirCompra(comp);
-        System.out.println(precio);
-        System.out.println(produc.getPrecioVenta());
+        store.conexion.ingresarCompra(produc,comp);
+        produc.calcularPrecio();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

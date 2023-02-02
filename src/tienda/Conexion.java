@@ -69,12 +69,9 @@ public class Conexion{
                 int id =  Integer.parseInt(rs.getString( 1 ));
                 String nombre = rs.getString( 2 );
                 Cliente clien = new Cliente(id, nombre);
-                System.out.println(id);
-                System.out.println(nombre);
                 clientes.add(clien);               
             }
-                          
-            //JOptionPane.showMessageDialog(null, "Se han insertado los datos");         
+        
         }catch (SQLException sqle) {
             System.out.println("Error en la ejecución:" 
             + sqle.getErrorCode() + " " + sqle.getMessage());
@@ -97,17 +94,58 @@ public class Conexion{
                 int id =  Integer.parseInt(rs.getString( 1 ));
                 String nombre = rs.getString( 2 );
                 InventarioProducto prod = new InventarioProducto(id, nombre);
-                System.out.println(id);
-                System.out.println(nombre);
                 productos.add(prod);               
             }
-                          
-            //JOptionPane.showMessageDialog(null, "Se han insertado los datos");         
+                                   
         }catch (SQLException sqle) {
             System.out.println("Error en la ejecución:" 
             + sqle.getErrorCode() + " " + sqle.getMessage());
         }
       return productos;
+    }
+    
+    public ArrayList<Compra> obtenerCompras(InventarioProducto producto){         
+        ArrayList<Compra> compras = new ArrayList<>();
+        PreparedStatement ps;
+        String consulta;
+        try{               
+            String SQL = "SELECT * FROM compras WHERE id_producto = "+producto.getId()+";";
+            PreparedStatement pstmt = conex.prepareStatement(SQL);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while ( rs.next() ) {
+                int id =  Integer.parseInt(rs.getString( 1 ));
+                int precio = Integer.parseInt(rs.getString( 2 ));
+                int cantC = Integer.parseInt(rs.getString( 3 ));
+                int cantR = Integer.parseInt(rs.getString( 4 ));
+                Compra comp = new Compra(precio, cantC);
+                comp.setCantidadReal(cantR);
+                comp.setId(id);
+                compras.add(comp);               
+            }
+            
+        }catch (SQLException sqle) {
+            System.out.println("Error en la ejecución:" 
+            + sqle.getErrorCode() + " " + sqle.getMessage());
+        }
+      return compras;
+    }
+    
+    public void sacarInventario(int id, int cant){
+        PreparedStatement ps;
+      String consulta;
+      try{
+          consulta = "UPDATE compras SET cantidadInventario = "+ cant +
+            " WHERE (idCompras = "+ id +");";
+            ps = conex.prepareStatement(consulta);
+            
+            ps.executeUpdate();
+
+        JOptionPane.showMessageDialog(null, "Se han sacado productos del inventario");         
+      }catch (SQLException sqle) {
+        JOptionPane.showMessageDialog(null,"Error en la ejecución:" 
+        + sqle.getErrorCode() + " " + sqle.getMessage());
+      } 
     }
 
     public static void ingresarVenta(Venta venta){
@@ -122,8 +160,7 @@ public class Conexion{
             ps.setInt(4, venta.getCliente().get_id());
             ps.executeUpdate();
 
-          JOptionPane.showMessageDialog(null, "Se han insertado los datos");
-          
+        JOptionPane.showMessageDialog(null, "Se ha guardado la venta");         
       }catch (SQLException sqle) {
         JOptionPane.showMessageDialog(null,"Error en la ejecución:" 
         + sqle.getErrorCode() + " " + sqle.getMessage());
@@ -134,7 +171,7 @@ public class Conexion{
       PreparedStatement ps;
       String consulta;
       try{
-          consulta = "INSERT INTO compras (precio, cantidadCompra, cantidadInventario, id_producto) VALUES (?,?,?);";
+          consulta = "INSERT INTO compras (precio, cantidadCompra, cantidadInventario, id_producto) VALUES (?,?,?,?);";
             ps = conex.prepareStatement(consulta);
             ps.setInt(1, compra.getPrecio());
             ps.setInt(2, compra.getCantidadComprada());
