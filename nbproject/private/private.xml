@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/tienda/src/tienda/InventarioProducto.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/tienda/src/tienda/Tienda.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/tienda/src/tienda/CompraPage.java</file>
             <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/tienda/src/tienda/Conexion.java</file>
-            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/tienda/src/tienda/VentaPage.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/tienda/src/tienda/Arqueo.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/tienda/src/tienda/Venta.java</file>
             <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/tienda/src/tienda/Compra.java</file>
         </group>
     </open-files>

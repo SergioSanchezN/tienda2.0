@@ -44,6 +44,9 @@ public class Compra {
     public void setCantidadReal(int cantidadReal){
         this.cantidadReal = cantidadReal;
     }
+    public void setPrecio(int precio){
+        this.precio = precio;
+    }
     
     
     //Vender producto

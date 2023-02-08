@@ -15,12 +15,13 @@ public class Tienda {
     Conexion conexion = Conexion.getSingletonInstance();
     private List<Cliente> clientes =  new ArrayList<>();
     private List<InventarioProducto> productos =  new ArrayList<>();
-
+    private List<Compra> compras = new ArrayList<>();
 
     //Constructor
     public Tienda(){      
         clientes = this.conexion.obtenerClientes();
-        productos = this.conexion.obtenerPoductos();        
+        productos = this.conexion.obtenerPoductos();  
+        compras = this.conexion.obtenerComprasTienda();
     }
     
     public List<Cliente> getClientes(){
@@ -29,6 +30,10 @@ public class Tienda {
     
     public List<InventarioProducto> getProductos(){
         return productos;
+    }
+    
+    public List<Compra> getCompras(){
+        return compras;
     }
     
     public void registrarVenta(Cliente cliente, InventarioProducto producto, int cantidad) {
@@ -41,7 +46,7 @@ public class Tienda {
         conexion.ingresarCompra(producto, compra);
     }
      
-    public void cargarP(InventarioProducto producto){
+    public void cargarProductos(InventarioProducto producto){
         
     }
     

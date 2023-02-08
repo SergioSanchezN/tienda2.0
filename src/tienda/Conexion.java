@@ -104,6 +104,33 @@ public class Conexion{
       return productos;
     }
     
+    public ArrayList<Compra> obtenerComprasTienda(){         
+        ArrayList<Compra> compras = new ArrayList<>();
+        PreparedStatement ps;
+        String consulta;
+        try{               
+            String SQL = "SELECT * FROM compras;";
+            PreparedStatement pstmt = conex.prepareStatement(SQL);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while ( rs.next() ) {
+                int id =  Integer.parseInt(rs.getString( 1 ));
+                int precio = Integer.parseInt(rs.getString( 2 ));
+                int cantC = Integer.parseInt(rs.getString( 3 ));
+                int cantR = Integer.parseInt(rs.getString( 4 ));
+                Compra comp = new Compra(precio, cantC);
+                comp.setCantidadReal(cantR);
+                comp.setId(id);
+                compras.add(comp);               
+            }
+            
+        }catch (SQLException sqle) {
+            System.out.println("Error en la ejecución:" 
+            + sqle.getErrorCode() + " " + sqle.getMessage());
+        }
+      return compras;
+    }
+    
     public ArrayList<Compra> obtenerCompras(InventarioProducto producto){         
         ArrayList<Compra> compras = new ArrayList<>();
         PreparedStatement ps;
