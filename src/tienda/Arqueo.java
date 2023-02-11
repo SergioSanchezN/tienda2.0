@@ -11,9 +11,8 @@ package tienda;
 public class Arqueo extends Compra {
     private Compra compra;
   
-    public Arqueo(int precio, int cantidad, Compra compra) {
+    public Arqueo(int precio, int cantidad) {
 	super(precio, cantidad);
-        this.compra = compra;
     }
     
     public void cambiarPrecio(){

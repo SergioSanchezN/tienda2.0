@@ -213,7 +213,7 @@ public class VentaPage extends javax.swing.JFrame {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         int index = jComboBox2.getSelectedIndex();
         InventarioProducto producto = store.getProductos().get(index);       
-        jLabel5.setText(String.valueOf(producto.calcularPrecio()));
+        jLabel5.setText(String.valueOf(producto.getPrecio()*1.1));
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -231,7 +231,7 @@ public class VentaPage extends javax.swing.JFrame {
         Cliente cliente = store.getClientes().get(jComboBox1.getSelectedIndex());
         InventarioProducto producto = store.getProductos().get(jComboBox2.getSelectedIndex());       
         int cantidad = Integer.parseInt(jTextField1.getText());
-        producto.venderProducto(cantidad);
+        producto.sacarProducto(cantidad);
         store.registrarVenta(cliente, producto, cantidad);
     }//GEN-LAST:event_jButton1ActionPerformed
 

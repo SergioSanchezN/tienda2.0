@@ -44,7 +44,14 @@ public class Tienda {
      public void registrarCompra(InventarioProducto producto,int precio, int cantidad) {
         Compra compra = new Compra(precio, cantidad);        
         conexion.ingresarCompra(producto, compra);
+        producto.actualizarInventario();
     }
+     
+    public void registrarArqueo(InventarioProducto producto, int precio, int cantidad) {
+        Arqueo arqueo = new Arqueo(precio, cantidad);        
+        conexion.ingresarArqueo(producto, arqueo);
+    }
+     
      
     public void cargarProductos(InventarioProducto producto){
         

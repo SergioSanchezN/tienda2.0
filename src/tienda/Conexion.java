@@ -93,7 +93,8 @@ public class Conexion{
             while ( rs.next() ) {
                 int id =  Integer.parseInt(rs.getString( 1 ));
                 String nombre = rs.getString( 2 );
-                InventarioProducto prod = new InventarioProducto(id, nombre);
+                int precio =  Integer.parseInt(rs.getString( 3 ));
+                InventarioProducto prod = new InventarioProducto(id, nombre, precio);
                 productos.add(prod);               
             }
                                    
@@ -158,6 +159,31 @@ public class Conexion{
       return compras;
     }
     
+    public ArrayList<Arqueo> obtenerArqueos(InventarioProducto producto){         
+        ArrayList<Arqueo> arqueos = new ArrayList<>();
+        PreparedStatement ps;
+        String consulta;
+        try{               
+            String SQL = "SELECT * FROM arqueos WHERE id_producto = "+producto.getId()+";";
+            PreparedStatement pstmt = conex.prepareStatement(SQL);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while ( rs.next() ) {
+                int id =  Integer.parseInt(rs.getString( 1 ));
+                int precio = Integer.parseInt(rs.getString( 2 ));
+                int cantC = Integer.parseInt(rs.getString( 3 ));
+                Arqueo arq = new Arqueo(precio, cantC);
+                arq.setId(id);
+                arqueos.add(arq);               
+            }
+            
+        }catch (SQLException sqle) {
+            System.out.println("Error en la ejecución:" 
+            + sqle.getErrorCode() + " " + sqle.getMessage());
+        }
+      return arqueos;
+    }
+    
     public void sacarInventario(int id, int cant){
         PreparedStatement ps;
       String consulta;
@@ -175,6 +201,8 @@ public class Conexion{
       } 
     }
 
+    
+    
     public static void ingresarVenta(Venta venta){
       PreparedStatement ps;
       String consulta;
@@ -194,10 +222,26 @@ public class Conexion{
       }    
     }
     
-    public static void ingresarCompra(InventarioProducto producto, Compra compra){
+    public void ingresarCompra(InventarioProducto producto, Compra compra){
       PreparedStatement ps;
       String consulta;
-      try{
+      try{  
+          int precioCompra = compra.getPrecio();
+          int cantidadCompra = compra.getCantidadComprada();
+          int precioMedio = obtenerPrecioProducto(producto);          
+          ArrayList<Compra> compras = obtenerCompras(producto);
+          int cantidadReal = 0;
+          for(Compra comp: compras){
+              cantidadReal=cantidadReal+comp.getCantidadReal();
+          }          
+          int precio = (precioMedio*cantidadReal+precioCompra*cantidadCompra)/(cantidadReal+cantidadCompra);
+                   
+          int id = producto.getId();        
+          consulta = "UPDATE productos SET precioMedio = "+ precio +
+            " WHERE (idProductos = "+ id +");";
+            ps = conex.prepareStatement(consulta);            
+            ps.executeUpdate();
+                   
           consulta = "INSERT INTO compras (precio, cantidadCompra, cantidadInventario, id_producto) VALUES (?,?,?,?);";
             ps = conex.prepareStatement(consulta);
             ps.setInt(1, compra.getPrecio());
@@ -212,6 +256,44 @@ public class Conexion{
         JOptionPane.showMessageDialog(null,"Error al guardar la compra:" 
         + sqle.getErrorCode() + " " + sqle.getMessage());
       }    
+    }
+    
+    public void ingresarArqueo(InventarioProducto producto, Arqueo arqueo){
+      PreparedStatement ps;
+      String consulta;
+      try{
+          consulta = "INSERT INTO arqueos (cantidad, precio, id_producto) VALUES (?,?,?);";
+            ps = conex.prepareStatement(consulta);
+            ps.setInt(1, arqueo.getCantidadComprada());
+            ps.setInt(2, arqueo.getPrecio());
+            ps.setInt(3, producto.getId());
+            ps.executeUpdate();
+
+        JOptionPane.showMessageDialog(null, "Se ha guardado el arqueo");         
+      }catch (SQLException sqle) {
+        JOptionPane.showMessageDialog(null,"Error en la ejecución:" 
+        + sqle.getErrorCode() + " " + sqle.getMessage());
+      }    
+    }
+    
+    public static int obtenerPrecioProducto(InventarioProducto producto){         
+        int precio = -1;
+        PreparedStatement ps;
+        String consulta;
+        try{               
+            String SQL = "SELECT precioMedio FROM producto WHERE idproductos = "+producto.getId()+";";
+            PreparedStatement pstmt = conex.prepareStatement(SQL);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while ( rs.next() ) {
+                precio = Integer.parseInt(rs.getString( 1 ));               
+            }
+            
+        }catch (SQLException sqle) {
+            System.out.println("Error en la ejecución:" 
+            + sqle.getErrorCode() + " " + sqle.getMessage());
+        }
+      return precio;
     }
     
     

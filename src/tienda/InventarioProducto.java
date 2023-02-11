@@ -18,11 +18,11 @@ public class InventarioProducto {
     Conexion conexion = Conexion.getSingletonInstance();
 
     //Constructor
-    public InventarioProducto(int id,String nombre){       
+    public InventarioProducto(int id,String nombre,int precio){       
         this.id = id;
         this.nombre = nombre;        
         this.compras = conexion.obtenerCompras(this);
-        this.precio = this.calcularPrecio();
+        this.precio = precio;
     }
 
     //GETs
@@ -36,6 +36,18 @@ public class InventarioProducto {
     
     public int getPrecio(){
         return precio;
+    }
+    
+    public int getCantidad(){
+        int total = 0;
+        for(Compra compraIter : compras){
+            total = total + compraIter.getCantidadReal();
+        }
+        return total;
+    }
+    
+    public void actualizarInventario(){
+        compras = this.conexion.obtenerCompras(this);
     }
     
     // Calcular precio
@@ -55,23 +67,24 @@ public class InventarioProducto {
     }
     
     //Vender producto
-    public void venderProducto(int cant){
+    public void sacarProducto(int cant){
         this.compras = conexion.obtenerCompras(this);
         for(Compra compraIter : compras){
             if((compraIter.getCantidadReal()-cant)>=0){
                 cant = compraIter.getCantidadReal()-cant;
-                System.out.println("a");
                 System.out.println(compraIter.getId());
                 System.out.println(cant);
                 conexion.sacarInventario(compraIter.getId(), cant);
                 break;
             }else{
-                System.out.println("b");
                 System.out.println(compraIter.getId());
                 System.out.println(cant);
                 cant=cant-compraIter.getCantidadReal();
                 conexion.sacarInventario(compraIter.getId(), 0);
             }       
-        }                     
-    }              
+        } 
+        compras = this.conexion.obtenerCompras(this);
+    }  
+    
+     
 }
