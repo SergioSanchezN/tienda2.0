@@ -281,7 +281,7 @@ public class Conexion{
         PreparedStatement ps;
         String consulta;
         try{               
-            String SQL = "SELECT precioMedio FROM producto WHERE idproductos = "+producto.getId()+";";
+            String SQL = "SELECT precioMedio FROM productos WHERE idproductos = "+producto.getId()+";";
             PreparedStatement pstmt = conex.prepareStatement(SQL);
             ResultSet rs = pstmt.executeQuery();
             

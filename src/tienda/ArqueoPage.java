@@ -190,7 +190,7 @@ public class ArqueoPage extends javax.swing.JFrame {
         int precio = Integer.parseInt(jTextField1.getText());
         int cantidad = Integer.parseInt(jTextField2.getText());
         int inventario = prod.getCantidad();
-        int ajuste = cantidad - inventario;
+        int ajuste =  cantidad - inventario;
         System.out.println(ajuste);
         Arqueo arqueo = new Arqueo(precio, ajuste);
         

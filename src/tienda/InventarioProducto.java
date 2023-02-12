@@ -39,6 +39,7 @@ public class InventarioProducto {
     }
     
     public int getCantidad(){
+        compras = this.conexion.obtenerCompras(this);
         int total = 0;
         for(Compra compraIter : compras){
             total = total + compraIter.getCantidadReal();
